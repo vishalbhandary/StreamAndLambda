@@ -14,14 +14,14 @@ public class Singleton {
     private String data; //in case of db we may store username or password like this
     //then we need to constructor to create an object based on this class
     //and make sure the access level of this constructor is set to private
-    private Singleton(String data){
+    private Singleton(){
         //inside we can initialise all the attributes of our object
-        this.data = data;
+        //this.data = data;
     }
     //we made the constructor private because we only need access to it
     // using a public static method inside a singleton class
     //Usually we name it getInstance which refer to single instance
-    public static Singleton getInstance(String data) {
+    public static Singleton getInstance() {
         //since class is volatile variable must be accessed everytime by reading it directly from the main memory
         //Which makes system to check twice one from if statement and another from return statement
         //to access the variable once we can store this in local variable(result) first time when we retrieve it.
@@ -36,7 +36,7 @@ public class Singleton {
             synchronized (Singleton.class) {
                 result = instance;
                 if (result == null) {
-                    instance = result = new Singleton(data);
+                    instance = result = new Singleton();
                 }
             }
         }
