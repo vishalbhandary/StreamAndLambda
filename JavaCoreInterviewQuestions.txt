@@ -1,0 +1,1438 @@
+Core java Interview Questions and Answers:
+-------------------------------------------
+
+1.Difference b/n jdk,jre and jvm?
+Ans:JDK(Java development kit) : It is a software development enviorment used for developing java applications.
+ *It includes Jre and other development tools like interpreter,compiler etc.
+ 
+  *JRE(Java Runtime Enviorment) :provides the libraries,JVM and other component to run application writtern in java.
+  *It is a part of the JDK but can also be downloaded separately.
+
+  
+   *JVM(Java Virtual Machine):*An abstract machine that enables your computer to run a Java program. 
+     *When you run a Java program, the JVM translates the Java bytecode into native machine code.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+2.What is the main method in Java?can we override main method?
+
+public static void main(String[] args) {
+    // code
+}
+*The main method is the entry point for any standalone Java application. The JVM calls the main method to start the execution of the program.
+*public: The method is accessible from anywhere.
+*static: The method can be called without creating an instance of the class.
+*void: The method does not return any value.
+*String[] args: The parameter is an array of String objects, which stores command-line arguments.
+
+*technically we cant override main method because its static associated to class only but we can overload it so ya main method we cant override.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+3.Difference b/n object and class?
+Ans: *class: A blueprint or prototype from which objects are created. 
+     * It defines a datatype by bundling data and methods that work on the data into one single unit.
+
+     *Object: An instance of a class. It is created from a class and has its own state and behavior.
+     For example, Car myCar = new Car(); creates an object myCar of class Car.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+4.Explain the four pillars of Object-Oriented Programming.?
+Ans:Encapsulation: Wrapping data (variables) and code (methods) together as a single unit (class).
+                  *It helps in protecting the data from outside interference and misuse.
+                  *It restricts direct access to some of the object's components and can prevent the accidental modification of data.
+
+         Benefits: *Data Hiding: Internal object details are hidden from the outside world, only exposing a controlled interface.
+
+                  *Modularity: The internal representation of an object can be changed without affecting the code that uses the object.
+                  
+                  *Security: Encapsulation provides a way to protect data from accidental corruption by outside code.
+
+        Implementation in Java:*Declare the variables of a class as private.
+                               *Provide public setter and getter methods to modify and view the variables' values.
+
+      Example:
+*     public class EncapsulationExample {
+      private String name;
+      public String getName() {
+        return name;
+      }
+      public void setName(String name) {
+        this.name = name;
+      }
+    }
+    
+    public static void main(String[] args) {
+        EncapsulationExample obj = new EncapsulationExample();
+        obj.setName("John");
+        System.out.println(obj.getName());
+    }
+  }
+
+ Abstraction:
+-------------
+ *Abstraction is the concept of hiding the complex implementation details and showing only the essential features of an object.
+ *Reduces Programming complexity and effort by providing a clear separation between what an object does and how it does it.
+ 
+ Benefits:
+ *Reduces Complexity: By providing a simplified view of the object.
+ *Improves Maintainability: Changes to the implementation do not affect the users of the abstraction.
+ *Enhances Reusability: Abstractions can be reused across different contexts without changes.
+
+ Implementation in Java:
+
+ *Use abstract classes and interfaces.
+
+ // Abstract class
+   abstract class Animal {
+    // Abstract method (does not have a body)
+    abstract void sound();
+
+    // Regular method
+    void sleep() {
+        System.out.println("Sleeping");
+    }
+}
+
+ //Subclass (inherits from Animal)
+  class Dog extends Animal {
+    // Provides implementation for the abstract method
+    void sound() {
+        System.out.println("Barking");
+    }
+  }
+
+  public class AbstractionExample {
+    public static void main(String[] args) {
+        Dog dog = new Dog();
+        dog.sound();  // Output: Barking
+        dog.sleep();  // Output: Sleeping
+    }
+  }
+
+ Inheritance:
+-------------
+
+*Inheritance is the mechanism by which one class (child or subclass) acquires the properties and behaviors (methods) 
+of another class (parent or superclass).
+
+*This promotes code reusability and establishes a natural hierarchy between classes.
+
+Benefits:
+ *Code Reusability: Allows the reuse of existing code.
+ *Method Overriding: Subclasses can provide specific implementations for methods that are already defined in the parent class.
+ *Polymorphism: Enables one interface to be used for a general class of actions.
+
+Implementation in Java:
+
+*Use the extends keyword.
+
+// Parent class
+class Vehicle {
+    void start() {
+        System.out.println("Vehicle started");
+    }
+}
+
+// Child class
+class Car extends Vehicle {
+    // New method specific to Car
+    void drive() {
+        System.out.println("Car driving");
+    }
+}
+
+public class InheritanceExample {
+    public static void main(String[] args) {
+        Car myCar = new Car();
+        myCar.start();  // Inherited method
+        myCar.drive();  // Car-specific method
+    }
+}
+
+Polymorphism:
+-------------
+
+*Polymorphism means "many forms".
+*It allows objects to be treated as instances of their parent class rather than their actual class. 
+
+*There are two types of polymorphism in Java: compile-time (method overloading) and runtime (method overriding).
+ Benefits:
+
+ *Flexibility: The same interface can be used for different underlying forms (data types).
+ *Maintainability: Makes it easier to maintain the code as methods can be overridden or overloaded without affecting existing code.
+
+* Method Overloading: Same method name with different parameters.
+* Method Overriding: Subclass provides a specific implementation of a method declared in its parent class.
+
+class MathOperation {
+    // Overloaded method with different parameter types
+    int add(int a, int b) {
+        return a + b;
+    }
+
+    double add(double a, double b) {
+        return a + b;
+    }
+}
+
+public class PolymorphismExample1 {
+    public static void main(String[] args) {
+        MathOperation operation = new MathOperation();
+        System.out.println(operation.add(5, 10));     // Output: 15
+        System.out.println(operation.add(5.5, 10.5)); // Output: 16.0
+    }
+}
+
+//method overriding:
+
+class Animal {
+    void sound() {
+        System.out.println("Animal makes sound");
+    }
+}
+
+class Dog extends Animal {
+    // Overriding the sound method
+    void sound() {
+        System.out.println("Dog barks");
+    }
+}
+
+public class PolymorphismExample2 {
+    public static void main(String[] args) {
+        Animal myAnimal = new Dog();  // Polymorphism
+        myAnimal.sound();  // Output: Dog barks
+    }
+}
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Q.5.Difference b/n methodoverloading and methodoverriding and why it is compile time and runtime and how?
+Ans: *Method Overloading:
+    Method overloading occurs when two or more methods in the same class have the same name
+   but different parameters (different type, number, or both). It is a compile-time polymorphism feature.
+
+ Characteristics of Method Overloading:
+*Methods have the same name but different signatures (parameter lists).
+*It can occur within a single class.
+*Return type can be the same or different.
+*It's resolved during compile time.
+
+ *MethodOverriding:
+  Method overriding occurs when a subclass provides a specific implementation for a method that is already defined in its superclass.
+  It is a runtime polymorphism feature.
+
+ Characteristics of Method Overriding:
+
+ *Methods have the same name and same signature (same parameter list).
+ *It occurs in two classes that have an inheritance relationship.
+ *The return type must be the same (or covariant type).
+ *It's resolved during runtime.
+ *The access level cannot be more restrictive than the overridden method.
+ 
+* Why is it compile-time?
+
+ *Method overloading is considered compile-time polymorphism because the decision about which overloaded
+ method to call is made by the compiler at compile time. 
+ *The compiler uses the method signature (method name and parameter list) to resolve the correct method to call.
+ 
+ *When you call an overloaded method, the compiler examines the number and types of the arguments you pass and matches them to the method signature.
+ If it finds a match, it compiles the code with that method.
+ 
+class MathOperation {
+    int add(int a, int b) {
+        return a + b;
+    }
+
+    double add(double a, double b) {
+        return a + b;
+    }
+}
+
+public class CompileTimePolymorphism {
+    public static void main(String[] args) {
+        MathOperation operation = new MathOperation();
+        System.out.println(operation.add(5, 10));      // Calls add(int, int)
+        System.out.println(operation.add(5.5, 10.5));  // Calls add(double, double)
+    }
+}
+
+*In the example, when operation.add(5, 10) is called, the compiler determines that it matches add(int, int).
+*Similarly, when operation.add(5.5, 10.5) is called, the compiler matches it to add(double, double).
+
+Why is it runtime?
+*Method overriding is considered runtime polymorphism because the decision about which overridden method to call is made at runtime.
+ The method to be called is determined based on the actual object type (not the reference type) at runtime.
+
+ *When a method is called on an object, the JVM determines the actual type of the object at runtime
+ and calls the appropriate method that matches the object's type, even if the method was declared in a superclass.
+
+*class Animal {
+    void sound() {
+        System.out.println("Animal makes sound");
+    }
+}
+
+class Dog extends Animal {
+    @Override
+    void sound() {
+        System.out.println("Dog barks");
+    }
+}
+
+public class RuntimePolymorphism {
+    public static void main(String[] args) {
+        Animal myAnimal = new Dog();  // Polymorphism
+        myAnimal.sound();  // Calls Dog's overridden sound() method
+    }
+}
+
+*In the example, myAnimal is a reference of type Animal, but it points to an object of type Dog.
+*When myAnimal.sound() is called, the JVM checks the actual type of myAnimal, which is Dog, and calls the sound() method defined in Dog.
+*This decision happens at runtime when the actual type of the object is known.
+
+Key Points:
+Compile-Time Polymorphism (Method Overloading):
+
+*The method resolution happens at compile time.
+*The compiler uses the method signature to determine which method to call.
+*Example: operation.add(5, 10) and operation.add(5.5, 10.5).
+
+
+Runtime Polymorphism (Method Overriding):
+
+*The method resolution happens at runtime.
+*The JVM uses the actual object type to determine which method to call.
+*Example: myAnimal.sound() where myAnimal is a reference of type Animal but points to an object of type Dog.
+___________________________________________________________________________________________________________________________________________________________________________________________
+______________________________________________________________________________________________________________________________________________________________________________________________
+
+Q.6. what is difference between abstract class and interface?
+Ans:*An abstract class is a class that cannot be instantiated on its own and may contain 
+    abstract methods (methods without a body) as well as concrete methods (methods with a body).
+
+   Key Characteristics:
+   
+  *Instantiation: Cannot be instantiated directly.
+  *Constructors: Can have constructors.
+  *Methods: Can have both abstract methods (without implementation) and concrete methods (with implementation).
+  *Fields: Can have instance variables (fields) with any visibility (private, protected, public).
+  *Access Modifiers: Can define methods with any access modifier (private, protected, public).
+  *Inheritance: A class can extend only one abstract class (single inheritance)
+
+ *Use an abstract class when you want to share code among several closely related classes.
+
+ Interface:
+------------
+  *An interface is a reference type in Java, similar to a class, that can contain only abstract methods 
+  (until Java 8, after which default and static methods were introduced).
+
+ Key Characteristics:
+
+*Instantiation: Cannot be instantiated directly.
+*Constructors: Cannot have constructors.
+*Methods: By default, all methods are abstract and public. From Java 8 onward, interfaces can also have default methods (with a body) and static methods.
+*Fields: Can have only public, static, and final (constant) fields.
+*Multiple Inheritance: A class can implement multiple interfaces.
+*Access Modifiers: Methods in an interface are implicitly public. From Java 9, private methods are also allowed in interfaces.
+
+Usage:
+Use an interface when you want to specify that a class must implement certain methods, regardless of where those classes are in the inheritance hierarchy.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Q.7. is java support multiple inheritance and if supports give exam[ple?
+Ans:Java does not support multiple inheritance through classes to avoid complexity and ambiguity problems, such as the Diamond Problem,
+    where a class inherits from two classes that both inherit from a common superclass.
+
+   *Java does support multiple inheritance through interfaces. This means a class can implement multiple interfaces,
+    allowing you to achieve the effect of multiple inheritance without the pitfalls associated with it.
+
+Diamond Problem:
+----------------
+ class A {
+    void display() {
+        System.out.println("Class A");
+    }
+}
+
+class B extends A {
+    void display() {
+        System.out.println("Class B");
+    }
+}
+
+class C extends A {
+    void display() {
+        System.out.println("Class C");
+    }
+}
+
+// If Java supported multiple inheritance, D would look like this:
+class D extends B, C {
+    // Ambiguity: Which display() method should D inherit?
+}
+
+public class DiamondProblemExample {
+    public static void main(String[] args) {
+        D obj = new D();
+        obj.display(); // Ambiguous: Should it call B's or C's display()?
+    }
+}
+-----------------------------------------------------------------------------
+
+ *Java allows a class to implement multiple interfaces, which provides a way to achieve multiple inheritance without ambiguity because
+ interfaces do not have implementation details for methods (except for default and static methods introduced in Java 8).
+ 
+ // Interface 1
+interface Animal {
+    void eat();
+}
+
+// Interface 2
+interface Pet {
+    void play();
+}
+
+// Class implementing multiple interfaces
+class Dog implements Animal, Pet {
+    @Override
+    public void eat() {
+        System.out.println("Dog is eating.");
+    }
+
+    @Override
+    public void play() {
+        System.out.println("Dog is playing.");
+    }
+}
+
+public class MultipleInheritanceExample {
+    public static void main(String[] args) {
+        Dog dog = new Dog();
+        dog.eat();   // Output: Dog is eating.
+        dog.play();  // Output: Dog is playing.
+    }
+}
+---------------------------------------------------------------------------------------------------------------------------
+
+ Handling Default Methods in Interfaces (Java 8+)
+ With the introduction of default methods in interfaces in Java 8, there is a potential for ambiguity if two interfaces have default methods with the same signature.
+ In such cases, the implementing class must override the method to resolve the ambiguity.
+
+ interface A {
+    default void show() {
+        System.out.println("Interface A");
+    }
+}
+
+interface B {
+    default void show() {
+        System.out.println("Interface B");
+    }
+}
+
+class C implements A, B {
+    @Override
+    public void show() {
+        // Resolving the ambiguity by explicitly calling one of the interfaces
+        A.super.show(); // or B.super.show();
+    }
+}
+
+public class DefaultMethodExample {
+    public static void main(String[] args) {
+        C obj = new C();
+        obj.show();  // Output: Interface A (or Interface B, depending on which is chosen)
+    }
+}
+-----------------------------------------------------------------------------------------------------------------------------------
+
+Q.7 What is the purpose of the final keyword in Java?
+
+Ans:*final variable: Its value cannot be changed once initialized.
+
+* final int MAX_VALUE = 100;
+
+*final method: Cannot be overridden by subclasses.
+
+class Animal {
+    final void sound() {
+        System.out.println("Animal makes sound");
+    }
+}
+
+final class: Cannot be subclassed.
+
+final class Animal {
+    void sound() {
+        System.out.println("Animal makes sound");
+    }
+}
+____________________________________________________________________________________________________________________________________________________________
+Q.8 What is a constructor in Java?
+Ans:   A constructor is a block of code used to initialize an object. 
+      It has the same name as the class and does not have a return type. Constructors can be parameterized or non-parameterized.
+
+     class Car {
+    String model;
+    Car(String model) {
+        this.model = model;
+    }
+}
+___________________________________________________________________________________________________________________________________________________________________
+Q.9 What is the difference in final,finally and finalize?
+Ans: 1.final
+     Definition:
+   *final is a keyword in Java used to declare constants, prevent inheritance, and prevent method overriding.
+
+   Usage:
+
+  Final Variable:
+
+  *A variable declared with the final keyword is a constant and cannot be modified once it is assigned a value.
+  It must be initialized when it is declared or in the constructor if it is an instance variable.
+
+  Final Method:
+
+  *A method declared as final cannot be overridden by subclasses.
+  This is useful for preventing changes to the method's implementation in subclasses, which can help ensure consistent behavior.
+
+  Final Class:
+
+  *A class declared as final cannot be subclassed (i.e., extended).
+   This is useful when you want to prevent the inheritance of a class, making it immutable or for security reasons.
+
+  final class FinalClass {
+    // Final variable (constant)
+    final int MAX_SPEED = 120;
+
+    // Final method
+    final void display() {
+        System.out.println("This is a final method.");
+    }
+}
+
+// Attempting to extend a final class will result in a compilation error
+// class AnotherClass extends FinalClass {} // Error: Cannot subclass final class
+
+class Vehicle {
+    // Final method
+    final void start() {
+        System.out.println("Vehicle starting.");
+    }
+}
+
+class Car extends Vehicle {
+    // Attempting to override a final method will result in a compilation error
+    // void start() {
+    //     System.out.println("Car starting.");
+    // }
+}
+
+public class FinalExample {
+    public static void main(String[] args) {
+        FinalClass obj = new FinalClass();
+        System.out.println(obj.MAX_SPEED); // Output: 120
+        obj.display(); // Output: This is a final method.
+    }
+}
+------------------------------------------------------------------------------------------------------------------------------------
+
+2. finally
+  *Definition:
+  finally is a block in Java used to execute important code such as cleanup actions, 
+  regardless of whether an exception is thrown or not. It is typically used with try and catch blocks.
+  
+ Finally Block:
+ *The finally block follows a try block and is executed after the try and any associated catch blocks.
+ *It is executed whether an exception occurs or not.
+ *Used for cleanup activities such as closing files, releasing resources, or cleaning up connections.
+
+ public class FinallyExample {
+    public static void main(String[] args) {
+        try {
+            int data = 10 / 0; // This will cause an ArithmeticException
+        } catch (ArithmeticException e) {
+            System.out.println("Exception caught: " + e);
+        } finally {
+            System.out.println("Finally block executed.");
+        }
+
+        try {
+            System.out.println("Inside try block.");
+        } finally {
+            System.out.println("Finally block executed even without an exception.");
+        }
+    }
+}
+
+output:Exception caught: java.lang.ArithmeticException: / by zero
+Finally block executed.
+Inside try block.
+Finally block executed even without an exception.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 3. finalize
+ *Definition:
+ *finalize is a method in Java used for garbage collection. It is called by the garbage collector on an object before the object is destroyed.
+
+   Usage:
+
+  *Finalize Method:
+  *The finalize method can be overridden to perform cleanup operations before an object is collected by the garbage collector.
+  * It is called only once by the garbage collector on an unreachable object.
+  * It is not guaranteed that the finalize method will be called immediately or even at all, as it depends on the garbage collector.
+
+  class FinalizeExample {
+    // Finalize method
+    @Override
+    protected void finalize() throws Throwable {
+        try {
+            System.out.println("Finalize method called.");
+        } finally {
+            super.finalize();
+        }
+    }
+
+    public static void main(String[] args) {
+        FinalizeExample obj = new FinalizeExample();
+        obj = null; // Make the object eligible for garbage collection
+        System.gc(); // Request garbage collection
+
+        // Wait for a while to see the finalize method output
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+  }
+ o/p:  Finalize method called.
+ 
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+this Keyword: Refers to the current object instance, used for accessing instance variables, methods, and constructors within the same class.
+super Keyword: Refers to the superclass of the current object, used for accessing superclass methods, variables, and constructors.
+
+this
+public class Example {
+    private int value;
+
+    // Constructor with a parameter
+    public Example(int value) {
+        this.value = value; // 'this' differentiates between the instance variable and parameter
+    }
+
+    // Method using 'this' to return current instance
+    public Example getExample() {
+        return this;
+    }
+}
+
+super
+
+class Parent {
+    String name = "Parent";
+
+    public void display() {
+        System.out.println("This is the parent class");
+    }
+}
+
+class Child extends Parent {
+    String name = "Child";
+
+    public void display() {
+        super.display(); // Calls the superclass method
+        System.out.println("This is the child class");
+    }
+
+    public void showNames() {
+        System.out.println(super.name); // Accesses superclass variable
+        System.out.println(this.name);  // Accesses current class variable
+    }
+}
+--------------------------------------------------------------------------------------------------------
+Q.10what is the concept of immutability and how to create immutable object and class in java?
+
+Ans:
+*Immutability is a fundamental concept in Java and other programming languages that ensures that an object’s state cannot be changed after it has been created.
+ * Immutable objects are particularly useful in concurrent and multi-threaded programming, 
+  as they inherently avoid synchronization issues by guaranteeing that their state will never change, 
+  making them thread-safe.
+
+ *Immutability means that once an object is created, its data or state cannot be modified. 
+  This provides several benefits, such as simplicity, safety, and ease of use in concurrent applications.
+
+ * Immutable Objects are objects whose fields are set at the time of creation and cannot be altered after that. 
+  This ensures that the object remains constant throughout its lifetime.
+
+Benefits of Immutability:
+*Thread-Safety:Immutable objects are inherently thread-safe because their state cannot be changed. 
+               Multiple threads can access them without needing synchronization.
+*Simplified Code:
+
+  With immutability, you don't have to worry about the object changing state, which simplifies debugging and reasoning about code.
+
+*Caching and Optimization:
+
+ Immutable objects can be cached and reused without the risk of them being altered elsewhere in the program.
+
+*Security:
+
+  They prevent unauthorized changes to data by ensuring that objects are in a consistent state 
+
+ Create an Immutable Object and Class in Java:
+  
+ to crete immutable class and object following principles you need to follow:
+// Declare the class as final:
+
+ *This prevents other classes from extending it and potentially altering its behavior.
+
+//Make all fields private and final:
+
+ *Private fields restrict access to the class’s internal data, and final fields ensure that the data can only be set once.
+
+//Provide no setter methods:
+
+  *Without setter methods, there is no way to change the value of fields after the object is created.
+
+//Initialize all fields in the constructor:
+
+*Set all fields via the constructor and ensure that these fields cannot be modified after construction.
+
+//Perform deep copies for mutable object references:
+
+ *If your immutable class contains fields that refer to mutable objects, make defensive copies of these objects to prevent external modifications.
+
+//Return copies of mutable objects from methods:
+
+ *If the class needs to return mutable objects, return a copy to maintain immutability.
+
+Example:
+// Immutable class
+public final class ImmutablePoint {
+    private final int x;
+    private final int y;
+
+    // Constructor to initialize fields
+    public ImmutablePoint(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    // Getter for x
+    public int getX() {
+        return x;
+    }
+
+    // Getter for y
+    public int getY() {
+        return y;
+    }
+
+    @Override
+    public String toString() {
+        return "ImmutablePoint{x=" + x + ", y=" + y + '}';
+    }
+
+    public static void main(String[] args) {
+        // Create an immutable point object
+        ImmutablePoint point = new ImmutablePoint(10, 20);
+
+        // Accessing the values
+        System.out.println(point); // Output: ImmutablePoint{x=10, y=20}
+
+        // Attempt to change the point coordinates (not possible, no setters)
+        // point.x = 30; // Error: Cannot assign a value to final variable 'x'
+
+        // Output the coordinates
+        System.out.println("X coordinate: " + point.getX()); // Output: X coordinate: 10
+        System.out.println("Y coordinate: " + point.getY()); // Output: Y coordinate: 20
+    }
+}
+Class Declaration:
+
+*The ImmutablePoint class is declared as final, which prevents any subclassing.
+Final Fields:
+
+*The fields x and y are declared as private and final, ensuring they can only be initialized once and cannot be modified thereafter.
+*Constructor:
+
+*The constructor initializes the fields. Since they are final, they must be set at the time of object creation.
+
+*No Setters:
+
+ There are no setter methods provided, which ensures that the values of x and y cannot be changed once the object is created.
+
+*Getter Methods:
+
+ Getter methods provide read-only access to the fields, allowing the values to be accessed but not modified.
+
+*toString() Method:
+
+The toString() method is overridden to provide a readable representation of the ImmutablePoint object, useful for debugging and logging.
+
+Usage
+The example demonstrates how to create and use an immutable class:
+
+*An ImmutablePoint object is created with specific coordinates.
+*The coordinates can be accessed using getter methods but cannot be changed.
+*Attempting to change the values directly (if allowed) would result in compilation errors, reinforcing immutability.
+  
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Q.11Why String is immuatble and also give an example?
+
+Ans:In Java, the String class is immutable, meaning that once a String object is created, its content cannot be changed.
+    *Memory Efficiency:
+  // Java uses a special area of memory called the "String Pool" to store strings. 
+  // If two strings have the same content, they can point to the same object in this pool.
+  // This saves memory because you don't have to create a new object every time.
+
+   *Thread Safety:
+
+  //Immutable strings are safe to use in multi-threaded programs because their content can't change. 
+    This means you don't have to worry about different threads changing the string at the same time.
+   
+  *Security:
+
+  //Since strings can't be changed, they can't be accidentally or maliciously altered,
+   which is important for sensitive information like passwords or file paths.
+
+ *Simplicity:
+
+  //Working with immutable strings is easier because you know the content won't change, 
+   so you don't have to worry about unexpected modifications.
+
+ public class StringImmutabilityExample {
+    public static void main(String[] args) {
+        // Creating a string
+        String greeting = "Hello, World!";
+        
+        // Attempting to change the string
+
+        // This doesn't modify the original string, but creates a new string
+        String newGreeting = greeting.toUpperCase();
+
+        // Printing the original and new strings
+        System.out.println("Original String: " + greeting);  // Output: Hello, World!
+        System.out.println("New String: " + newGreeting);    // Output: HELLO, WORLD!
+
+        // String Pool demonstration
+        String a = "Java";
+        String b = "Java";
+        String c = new String("Java");                                                                                             a ->   java
+
+        // Checking reference equality
+        System.out.println(a == b);  // Output: true (both point to the same string pool object)
+        System.out.println(a == c);  // Output: false (c is a different object)
+
+        // Demonstrating immutability with concatenation
+        String original = "Immutable";
+        String modified = original.concat(" String");
+
+        System.out.println("Original: " + original);  // Output: Immutable
+        System.out.println("Modified: " + modified);  // Output: Immutable String
+    }
+}
+  
+Explanation
+//*//String Modification:
+
+ In the example, the method toUpperCase() is called on the greeting string.
+ Instead of modifying greeting, a new String object is created with the uppercase characters, and the original string remains unchanged.
+
+
+ 
+//*//String Pool:
+
+ The example shows how strings "Java" are interned in the string pool. a and b refer to the same object in the string pool, 
+ while c is created using new and thus is a different object.
+
+//*//Concatenation:
+
+When concat is called on the original string, a new string modified is created, demonstrating that the original string remains unchanged.
+
+*Memory Efficiency: String pooling reduces memory usage by reusing immutable string objects.
+*Thread-Safe: Immutable strings can be shared among threads without synchronization.
+*Security: Immutable strings prevent accidental or malicious changes to sensitive data.
+*Ease of Use: Immutability simplifies string handling and minimizes bugs.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Q.12what are the different ways to create object in java?
+Ans:1.Using the new Keyword:
+ *This is the most common and straightforward way to create an object in Java.
+ It allocates memory for the object and calls the constructor to initialize it.
+
+ public class MyClass {
+    private int value;
+
+    // Constructor
+    public MyClass(int value) {
+        this.value = value;
+    }
+
+    public int getValue() {
+        return value;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Creating an object using the new keyword
+        MyClass obj = new MyClass(10);
+        System.out.println("Value: " + obj.getValue());  // Output: Value: 10
+    }
+}
+
+
+2.Using Class newInstance() Method (Reflection)
+
+*Java’s Reflection API allows you to create objects at runtime,
+ which can be useful for dynamically loading classes and instantiating objects.
+
+* public class Main {
+    public static void main(String[] args) {
+        try {
+            // Using the Class newInstance() method (deprecated in Java 9 and later)
+            MyClass obj = MyClass.class.newInstance();
+            System.out.println("Object created using newInstance(): " + obj);
+        } catch (InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+ As of Java 9, newInstance() is deprecated. Use getDeclaredConstructor().newInstance() instead for a more modern approach.
+
+public class Main {
+    public static void main(String[] args) {
+        try {
+            // Using the Constructor class newInstance() method
+            MyClass obj = MyClass.class.getDeclaredConstructor().newInstance();
+            System.out.println("Object created using newInstance(): " + obj);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+3.Using Object.clone() Method
+
+*If a class implements the Cloneable interface, you can create a copy of an existing object using the clone() method.
+
+ public class MyClass implements Cloneable {
+    private int value;
+
+    public MyClass(int value) {
+        this.value = value;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    // Overriding the clone() method
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+    public static void main(String[] args) {
+        try {
+            MyClass original = new MyClass(10);
+            // Creating a clone of the original object
+            MyClass clone = (MyClass) original.clone();
+            System.out.println("Original Value: " + original.getValue()); // Output: Original Value: 10
+            System.out.println("Clone Value: " + clone.getValue());       // Output: Clone Value: 10
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+    }
+}
+*Cloning is a bit tricky and can lead to issues if not handled carefully.
+ It’s important to ensure deep cloning if the object contains references to mutable objects.
+
+
+4. Using Deserialization:Deserialization is the process of converting a byte stream back into an object. 
+                      This requires the object to implement the Serializable interface.
+
+ import java.io.*;
+
+public class MyClass implements Serializable {
+    private static final long serialVersionUID = 1L;
+    private int value;
+
+    public MyClass(int value) {
+        this.value = value;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public static void main(String[] args) {
+        try {
+            // Serialize the object
+            MyClass original = new MyClass(10);
+            FileOutputStream fos = new FileOutputStream("object.dat");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(original);
+            oos.close();
+
+            // Deserialize the object
+            FileInputStream fis = new FileInputStream("object.dat");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            MyClass deserialized = (MyClass) ois.readObject();
+            ois.close();
+
+            System.out.println("Deserialized Value: " + deserialized.getValue()); // Output: Deserialized Value: 10
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+
+5. Using Factory Methods:
+ *Factory methods are static methods that return an instance of a class.
+ *They provide flexibility in object creation and can be used to control the object instantiation process.
+
+public class MyClass {
+    private int value;
+
+    // Private constructor
+    private MyClass(int value) {
+        this.value = value;
+    }
+
+    // Factory method to create an instance
+    public static MyClass createInstance(int value) {
+        return new MyClass(value);
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public static void main(String[] args) {
+        // Creating an object using a factory method
+        MyClass obj = MyClass.createInstance(10);
+        System.out.println("Value: " + obj.getValue());  // Output: Value: 10
+    }
+}
+
+
+6. Using the Builder Pattern:The Builder pattern is a design pattern used to construct complex objects.
+ *It allows for more control over the construction process, especially useful when an object requires multiple parameters.
+
+ public class MyClass {
+    private final int value;
+    private final String name;
+
+    // Private constructor accessed by the Builder
+    private MyClass(Builder builder) {
+        this.value = builder.value;
+        this.name = builder.name;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    // Builder class
+    public static class Builder {
+        private int value;
+        private String name;
+
+        public Builder setValue(int value) {
+            this.value = value;
+            return this;
+        }
+
+        public Builder setName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public MyClass build() {
+            return new MyClass(this);
+        }
+    }
+
+    public static void main(String[] args) {
+        // Creating an object using the Builder pattern
+        MyClass obj = new MyClass.Builder()
+                .setValue(10)
+                .setName("Test")
+                .build();
+
+        System.out.println("Value: " + obj.getValue());  // Output: Value: 10
+        System.out.println("Name: " + obj.getName());    // Output: Name: Test
+    }
+}
+
+ 7.Using Dependency Injection:
+
+*In frameworks like Spring, objects are created using Dependency Injection (DI), 
+where the framework automatically manages the creation and injection of dependencies.
+
+ import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Component;
+
+// Component annotation for Spring to recognize this as a bean
+@Component
+public class MyClass {
+    private int value = 10;
+
+    public int getValue() {
+        return value;
+    }
+}
+
+// Configuration class to enable Spring's component scanning
+public class Config {
+}
+
+// Main class to demonstrate dependency injection
+public class Main {
+    public static void main(String[] args) {
+        // Create the application context
+        ApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
+
+        // Retrieve the bean from the context
+        MyClass obj = context.getBean(MyClass.class);
+
+        System.out.println("Value from Spring bean: " + obj.getValue()); // Output: Value from Spring bean: 10
+    }
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------
+Q.13 difference between deep copy and shallow copy with example?
+ 
+Ans>*Shallow copy and deep copy are two different approaches to copying objects or data structures. 
+
+  Shallow Copy:
+
+ *Shallow copy creates a new object and copies the references of the original object’s elements into the new object. 
+ *The new object references the same memory locations as the original object for its elements.
+ *If any changes are made to the shared elements in the new or original object, the changes will be reflected in both.
+ *Shallow copy is a relatively faster operation and requires less memory.
+ *Shallow copy is suitable when you want to create a new object, but you don’t need independent copies of the elements.
+
+ Deep copy:
+
+ *Deep copy creates a new object and recursively copies the elements of the original object, including any objects referenced within it.
+ *The new object has its own memory locations for all the elements, including the referenced objects.
+ *Changes made to the elements in the deep copy do not affect the original object or any other copied objects.
+ *Deep copy is a relatively slower operation and requires more memory, especially for complex data structures.
+ *Deep copy is suitable when you want to create a completely independent copy of an object, including all its nested objects.
+
+example:
+
+ class ABC  
+{  
+// instance variable of the class ABC  
+int x = 30;  
+}  
+public class ShallowCopyExample   
+{     
+// main method  
+public static void main(String argvs[])   
+{  
+// creating an object of the class ABC  
+ABC obj1 = new ABC();                                                obj1  obj2 =6
+  
+// it will copy the reference, not value  
+ABC obj2 = obj1;                                                                             
+  
+// updating the value to 6   
+// using the reference variable obj2  
+obj2.x = 6;  
+  
+// printing the value of x using reference variable obj1   
+System.out.println("The value of x is: " + obj1.x);  
+}  
+}   
+
+
+Deepcopy example:
+class ABC  
+{  
+// instance variable of the class ABC  
+int x = 30;  
+}  
+public class DeepCopyExample   
+{     
+// main method  
+public static void main(String argvs[])   
+{  
+// creating an object of the class ABC  
+ABC obj1 = new ABC();  
+  
+// it will copy the reference, not value  
+ABC obj2 = (ABC)obj1.clone(); =6  
+  
+// updating the value to 6   
+// using the reference variable obj2  
+obj2.x = 6;  
+  
+// printing the value of x using reference variable obj1   
+System.out.println("The value of x is: " + obj1.x);  =30
+}  
+}   
+ 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+Q.14.What is Static variable,Local variable and Instance variable?
+Ans:In Java, a static variable is a class-level variable that is shared among all instances of a class.
+    *It is defined using the static keyword and is associated with the class itself, rather than any particular object instance.
+    *Key Characteristics of Static Variables
+    
+    Shared Across Instances:
+
+    *Static variables are shared among all instances of a class. This means there is only one copy of the static variable for the entire class,
+    regardless of how many objects are created.
+
+    Class-Level Variable:
+
+    *A static variable belongs to the class, not to any specific instance of the class. It can be accessed directly using the class name.
+
+   Lifetime:
+
+  * Static variables are initialized when the class is first loaded into memory and exist until the program terminates.
+   They retain their values between method calls and across different instances.
+  *Memory Allocation:
+
+   *Memory for static variables is allocated in the static memory area, which is separate from the memory area for instance variables.
+
+  *Accessibility:
+
+   Static variables can be accessed using the class name, without creating an instance of the class.
+
+ public class Counter {
+    // Static variable
+    private static int count = 0;
+
+    // Constructor that increments the static variable
+    public Counter() {
+        count++;
+    }
+
+    // Static method to get the current count
+    public static int getCount() {
+        return count;
+    }
+
+    public static void main(String[] args) {
+        // Creating multiple instances of Counter
+        Counter c1 = new Counter();
+        Counter c2 = new Counter();
+        Counter c3 = new Counter();
+
+        // Accessing the static variable using the class name
+        System.out.println("Total objects created: " + Counter.getCount()); // Output: Total objects created: 3
+    }
+}
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+Local Variable :
+*Local variables are variables that are declared within a method, constructor, or block of code. 
+They are only accessible within that specific method, constructor, or block and do not exist outside of it.
+
+ Key Characteristics of Local Variables
+*Scope: Local variables are limited to the block of code in which they are declared. They cannot be accessed from outside that block.
+
+*Lifetime: Local variables are created when the block of code is executed and are destroyed when the block finishes executing. 
+ They do not retain their values between method calls.
+
+*Initialization: Local variables must be explicitly initialized before they are used. Java does not provide default values for local variables.
+
+*Memory Allocation: Local variables are stored on the stack and are allocated memory each time the block is entered and deallocated when the block is exited.
+
+*Modifiers: Local variables cannot be declared with access modifiers (public, private, etc.) or static. They are only visible within the block.
+
+public class LocalVariableExample {
+    public void displaySum() {
+        // Local variables
+        int num1 = 5;
+        int num2 = 10;
+
+        // Calculating the sum of local variables
+        int sum = num1 + num2;
+
+        // Printing the result
+        System.out.println("Sum: " + sum); // Output: Sum: 15
+    }
+
+    public static void main(String[] args) {
+        LocalVariableExample example = new LocalVariableExample();
+        example.displaySum();
+    }
+}
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+*Instance Variables
+Instance variables are variables that are declared inside a class but outside any method, constructor, or block. 
+They are associated with an instance of the class and represent the properties or attributes of the object.
+
+Key Characteristics of Instance Variables
+*Scope: Instance variables are accessible from any method, constructor, or block within the class. They are also accessible by creating an object of the class.
+
+*Lifetime: Instance variables are created when an object is instantiated and are destroyed when the object is destroyed
+ (when it becomes eligible for garbage collection).
+
+*Initialization: Instance variables are automatically initialized with default values if not explicitly initialized. 
+ For example, numbers default to 0, booleans to false, and object references to null.
+
+*Memory Allocation: Instance variables are stored in the heap as part of the object's memory allocation.
+
+*Modifiers: Instance variables can be declared with access modifiers (public, private, etc.) to control visibility.
+
+public class InstanceVariableExample {
+    // Instance variables
+    private String name;
+    private int age;
+
+    // Constructor to initialize instance variables
+    public InstanceVariableExample(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    // Method to display instance variables
+    public void displayInfo() {
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
+    }
+
+    public static void main(String[] args) {
+        // Creating an object and initializing instance variables
+        InstanceVariableExample person = new InstanceVariableExample("Alice", 25);
+
+        // Displaying the instance variables
+        person.displayInfo();
+    }
+} 
+
+Aspect   	       Local Variables	                                        Instance Variables
+Scope	          *Limited to the method/block where declared	        * Accessible within the class, and through object instances
+Lifetime	  *Exist only during method/block execution	        * Exist as long as the object is alive
+Initialization	  *Must be explicitly initialized before use	        * Automatically initialized with default values
+Memory Location 	*Stored on the stack	                                * Stored on the heap as part of the object
+Modifiers	    *Cannot use access modifiers or static	                * Can use access modifiers (public, private, etc.)
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+Q 15. Can a class be final?
+* Yes, in Java, a class can be declared as final. When we declare a class as final, it means that the class cannot be subclassed or extended by other classes. 
+* This is useful when you want to enforce that a particular class should not have any subclasses, either for security reasons,
+ to ensure immutability, or to optimize performance.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Q.16 what is static or final method?
+
+*A static method is a method that belongs to the class rather than any particular instance of the class. 
+It can be called without creating an instance of the class and is defined using the static keyword.
+
+*A final method is a method that cannot be overridden by subclasses. 
+It is defined using the final keyword and is typically used to prevent modification of the method's implementation in derived classes.
+
+
+Ans: Key Differences Between Static and Final Methods
+Aspect	                Static Methods	                                                       Final Methods
+Association	      *Belong to the class rather than any instance	                *Can belong to an instance and cannot be overridden
+Access to Variables	*Can access static variables and methods	                        *Can access both static and instance variables
+Inheritance	      *Can be inherited but not overridden (hidden in subclasses)	        *Can be inherited but not overridden
+Use Cases	      *Utility functions, class-level operations	                         *Critical functionality that should not be changed
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Q.17 what are the difference between string ,string builder and string buffer?
+
+1. String
+  *A String in Java is an immutable sequence of characters. Once a String object is created, it cannot be changed.
+
+  *Key Characteristics of String
+   *Immutability:
+
+   Once a String is created, its value cannot be changed. Any operation that modifies a String actually creates a new String object
+   *Thread Safety:
+   String is inherently thread-safe because it is immutable. Multiple threads can safely access a String object without any synchronization.
+
+   *Performance:
+    Due to immutability, operations that modify strings, such as concatenation, can be less efficient as they create new objects.
+
+   *String Pool:
+    String objects are stored in a special memory area called the String Pool. This allows for efficient memory usage by reusing String objects with the same value.
+
+  public class StringExample {
+    public static void main(String[] args) {
+        String str1 = "Hello";
+        String str2 = str1; // Both str1 and str2 refer to the same object in the String pool
+
+        // Concatenation creates a new String object
+        String str3 = str1 + " World";
+
+        System.out.println("str1: " + str1); // Output: Hello
+        System.out.println("str3: " + str3); // Output: Hello World
+    }
+}
+
+
+  
+2. StringBuilder
+*StringBuilder is a mutable sequence of characters that allows for efficient modifications. 
+ It is not thread-safe, making it more suitable for use in single-threaded contexts.
+
+   Key Characteristics of StringBuilder
+  *Mutability:
+
+   StringBuilder objects can be modified after they are created, allowing for efficient concatenation and modification operations without creating new objects.
+   Performance:
+
+   StringBuilder is generally more efficient than String for string manipulation, as it does not create new objects for each modification.
+   Thread Safety:
+
+   StringBuilder is not thread-safe. It should be used when thread safety is not a concern.
+    Example of StringBuilder
+
+public class StringBuilderExample {
+    public static void main(String[] args) {
+        StringBuilder sb = new StringBuilder("Hello");
+
+        // Append operation modifies the existing object
+        sb.append(" World");
+
+        System.out.println("StringBuilder: " + sb.toString()); // Output: Hello World
+    }
+}
+
+ 3. StringBuffer
+   *StringBuffer is similar to StringBuilder in that it is a mutable sequence of characters, 
+   *but it is thread-safe. It provides synchronized methods to ensure that multiple threads can safely modify a StringBuffer 
+
+  Key Characteristics of StringBuffer
+  *Mutability:
+
+   Like StringBuilder, StringBuffer is mutable and allows modifications without creating new objects.
+
+  *Thread Safety:
+
+    StringBuffer is thread-safe due to its synchronized methods.
+    This makes it suitable for use in multi-threaded environments where thread safety is 
+
+  Performance:
+
+  *Due to synchronization, StringBuffer is slightly less efficient than StringBuilder for single-threaded scenarios.
+
+  public class StringBufferExample {
+    public static void main(String[] args) {
+        StringBuffer sb = new StringBuffer("Hello");
+
+        // Append operation modifies the existing object
+        sb.append(" World");
+
+        System.out.println("StringBuffer: " + sb.toString()); // Output: Hello World
+    }
+}
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
